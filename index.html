@@ -1,151 +1,463 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101010">
-  <title>Vídeo | Minha Página</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #101010;
-      --panel: #191919;
-      --text: #f3f3f3;
-      --muted: #a5a5a5;
-      --accent: #e44b4b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(ellipse at top, #292020 0%, var(--bg) 52%);
-      color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      border-bottom: 1px solid #303030;
-      padding: 20px 24px;
-    }
-    .brand {
-      max-width: 1050px;
-      margin: 0 auto;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .95rem;
-    }
-    .brand span { color: var(--accent); }
-    main {
-      width: min(100% - 32px, 920px);
-      margin: 56px auto;
-      flex: 1;
-    }
-    .eyebrow {
-      color: var(--accent);
-      font-size: .78rem;
-      font-weight: 750;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      margin: 0 0 12px;
-    }
-    h1 {
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      line-height: 1.12;
-      margin: 0 0 14px;
-      letter-spacing: -.035em;
-    }
-    .intro {
-      color: var(--muted);
-      line-height: 1.65;
-      margin: 0 0 28px;
-    }
-    .video-card {
-      background: var(--panel);
-      padding: 10px;
-      border: 1px solid #303030;
-      border-radius: 16px;
-      box-shadow: 0 24px 70px #0007;
-    }
-    .video-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-radius: 9px;
-      background: #050505;
-    }
-    iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 20px 4px 4px;
-    }
-    .note { color: var(--muted); font-size: .9rem; }
-    .button {
-      display: inline-block;
-      color: white;
-      background: var(--accent);
-      text-decoration: none;
-      font-weight: 700;
-      padding: 11px 16px;
-      border-radius: 9px;
-      transition: background .2s ease, transform .2s ease;
-    }
-    .button:hover { background: #c93c3c; transform: translateY(-1px); }
-    footer {
-      border-top: 1px solid #303030;
-      color: #858585;
-      text-align: center;
-      padding: 22px 16px;
-      font-size: .82rem;
-    }
-    @media (max-width: 520px) {
-      main { margin: 36px auto; }
-      .actions { align-items: stretch; flex-direction: column; }
-      .button { text-align: center; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Andarilho e suas Sombras — Vídeos</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#f6f3ee;--surface:#fff;--text:#1d1b19;--muted:#6b645c;--accent:#7a1f1f;--line:#ddd5ca;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#141211;--surface:#1d1a18;--text:#ece6dd;--muted:#a39a8f;--accent:#d98a7a;--line:#332f2b;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#141211;--surface:#1d1a18;--text:#ece6dd;--muted:#a39a8f;--accent:#d98a7a;--line:#332f2b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.55}
+header.top{padding:2rem 1.25rem 0;max-width:960px;margin:0 auto}
+header.top h2{margin:0;font-size:1.1rem;letter-spacing:.04em;font-weight:normal;color:var(--muted)}
+nav{max-width:960px;margin:1rem auto 0;padding:0 1.25rem;display:flex;gap:.5rem;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav button{font:inherit;background:none;border:0;color:var(--muted);padding:.7rem 1rem;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+nav button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{max-width:960px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+.eyebrow{margin:0 0 .25rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent)}
+h1{margin:0 0 .5rem;font-size:1.6rem;line-height:1.25}
+.intro{color:var(--muted);margin:0 0 1rem}
+.intro a{color:var(--accent)}
+.video-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;margin-bottom:2rem}
+.video{position:relative;aspect-ratio:16/9;width:100%;background:#000;border-radius:6px;overflow:hidden}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.mais{font:inherit;display:block;margin:0 auto;padding:.7rem 1.4rem;background:var(--accent);color:var(--bg);border:0;border-radius:8px;cursor:pointer}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:1.5rem;color:var(--muted)}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">Minha <span>Página</span></div>
-  </header>
-  <main>
-    <p class="eyebrow">Vídeo em destaque</p>
-    <h1>3 - O que é isto - a filosofia? (Martin Heidegger) - Falsa pergunta</h1>
-    <p class="intro">
-      O vídeo está incorporado abaixo. Se o player não carregar,
-      você pode abri-lo diretamente no BitChute.
-    </p>
+<header class="top"><h2>Andarilho e suas Sombras · BitChute</h2></header>
+<nav role="tablist" aria-label="Tópicos" id="tabs"></nav>
+<main id="content"></main>
 
-    <section class="video-card" aria-label="Player de vídeo">
-     <div class="video">
-  <iframe
-    src="https://www.bitchute.com/embed/XTfJ0YfGNjD8/"
-    title="Vídeo do BitChute"
-    allowfullscreen
-    loading="lazy"></iframe>
-</div>
+<script>
+/* ============================================================
+   COMO ADICIONAR VÍDEOS
+   Cada vídeo é uma linha: { titulo, id, aba }
+   - titulo: título original do vídeo no BitChute
+   - id: o trecho final da URL de embed (bitchute.com/embed/ID/)
+   - aba: "filosofia", "nietzsche" ou "opiniao"
+   ============================================================ */
+const ABAS = [
+  { chave:"filosofia", nome:"Filosofia geral" },
+  { chave:"nietzsche", nome:"Nietzsche" },
+  { chave:"opiniao",   nome:"Opinião" }
+];
 
-<style>
-  .video { position: relative; width: 100%; max-width: 900px; margin: 0 auto; aspect-ratio: 16 / 9; }
-  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 12px; }
-</style>
-    </section>
-  </main>
+/* Classificação automática por palavras-chave no título (ordem de prioridade):
+   1) exceções que vão direto para Opinião; 2) Nietzsche; 3) Filosofia geral; 4) o resto é Opinião. */
+const OPINIAO_PRIMEIRO = /reagindo|react de|retratar|imbecil e um charlatão|marilyn manson|a quem interessa/i;
+const NIETZSCHE = /nietzsche|zaratustra|ecce homo|além do bem|nascimento da tragédia|eterno retorno|baeumler|elizabeth forster|estado grego/i;
+const FILOSOFIA = /heidegger|filosof|filósof|sócrates|pré-socr|kant|schopenhauer|freud|hegel|metafísic|leucipo|demócrito|teodoro|caminhos de floresta|contramovimento ao niilismo|ser ou parecer|ética|livre arbítrio|camus/i;
+function classificar(t) {
+  if (OPINIAO_PRIMEIRO.test(t)) return "opiniao";
+  if (NIETZSCHE.test(t)) return "nietzsche";
+  if (FILOSOFIA.test(t)) return "filosofia";
+  return "opiniao";
+}
 
-  <footer>Vídeo incorporado de uma plataforma externa.</footer>
+const RAW = `XTfJ0YfGNjD8|3 - O que é isto - a filosofia? (Martin Heidegger) - Falsa pergunta
+hLEMnENTbwNE|Its a Dirty World Reich....
+SdWsthuCT6zz|77 - O outro canto da dança - Assim falou Zaratustra,F.
+6rf6RM3CO8mK|15 de outubro de 1844
+UTfQFxBYib5Z|Talvez seja preciso ressignificar a loucura
+obWIFUPsaWrl|Andarilho (2006) - Caio Guimarães
+SQ9y5n5Heo5C|2 - O que é isto - a filosofia? (Martin Heidegger) - Filosofia X Philosophia
+bq2W8dOAvDAL|Reagindo ao Linck: Anne Frank, vitimismo e Nietzsche (ai ai ai, la vem!)
+tFG1ZNpLUqaK|76 - Do grande anseio - Assim falou Zaratustra,F.
+kWXmr0fpEoEv|Os esquerdistas pregam a razão mas são escravos de suas irracionalidades
+fcS8lq4bM6wU|O que é isto - a filosofia? (Martin Heidegger) - INTRODUÇÃO
+TYo0AYGrFotF|Não, a questão sobre o suicídio não é a pergunta fundamental da filosofia.
+7DP6HoToUAGF|A tradição diz que a BELEZA é a base e o que importa, mas a fúria - feia - diz que não. Ô lasquera!!
+zyIb2lJ8oKul|A Trapaça da academia e do entretenimento filosófico: não pensando, são como BOXE sem soco no rosto
+7SMbLqAyAIZ8|75 - O convalescente - Assim falou Zaratustra,F. Nietzsche
+b6ghsHvvd6Q2|"Apologia de Sócrates" não é um livro de filosofia, é só um panfletinho cristão
+liAdShUxkoco|74 - De velhas e novas tábuas, 29 e 30, carvão e diamante - Assim falou Zaratustra,F. Nietzsche
+hZ9CYh3v8eFo|73 - De velhas e novas tábuas, 25 a 28, futuro da humanidade - Assim falou Zaratustra,F. Nietzsche
+WIjDYZg3bRGF|10 de fevereiro de 1945
+aiUZbesIbmIv|Desânimos, mudanças e planos para o futuro
+fgFgAACgH6tI|72 - De velhas e novas tábuas, 23 e 24, Matrimônio - Assim falou Zaratustra,F. Nietzsche
+Xm5l2Kc65XLo|7 de fevereiro de 1945
+DaJNoxyIE8HJ|Comentando e ouvindo o disco Nadir, do Facada
+Q6jKvJdnVozX|71 - De velhas e novas tábuas, 19 - 22, Parasitas e gentalha - Assim falou Zaratustra,F. Nietzsche
+1lNMDlWsx6bq|6 de fevereiro de 1945
+UyHTWGZIYsX5|Jedem das Seine - um relato ficcional da morte de Otto Neururer
+S8ogpZyeyViE|Stories from the waterfall, stories from the peak
+C9vvgZ6XuLAY|Tier list de frases clichês de filósofos
+OJLKK8NeJQS6|70 - De velhas e novas tábuas, 16 - 18, Cansados do mundo - Assim falou Zaratustra, F. Nietzsch
+UJhJaM07aAyd|Caminhos de floresta - Martin Heidegger
+JmVefwSkMx50|O que significa o contramovimento ao niilismo?
+w6SaeyF6wFtN|4 de fevereiro de 1945
+mFsioIHZxRzO|69 - De velhas e novas tábuas, 14 e 15, Caluniadores do mundo - Assim falou Zaratustra, F. Nietzsche
+rnzhz9btDLNf|Diretrizes para o estudo de Nietzsche (e de filosofia em geral)
+BOwpsrqRzNzx|Da imprensa à internet, da internet à IA: a voz dos imbecis que nada têm a dizer
+faxpGkvzAlug|Sobre trolls, haters, lolcows, rejeitados e ressentidos...
+6bwmB5uRjHmF|Testamento de Bormann - Introdução
+HVr0CyfF00iu|Falando do meu livro de poemas
+ILC6VKG0Qu00|O papel da revolução escrava/cristã na judaização do ocidente (corte do vídeo do Zaratustra)
+wIkbec0prhM7|68 - De velhas e novas tábuas, 13, Pessimistas - Assim falou Zaratustra, F. Nietzsche
+dEiEzCPC42pr|A propriedade como atributo passivo está acabando, só resta aos bobos chorar!
+VDZKJIRO5FaS|Nietzsche diagnosticou, Heidegger propõe a cura
+SSd4Hc8yPXQe|Um dia você vai descobrir que todos te odeiam e te querem morto
+nHggmFqnsR1d|67 - De velhas e novas tábuas, 11 e 12 - Nova nobreza - Assim falou Zaratustra, F. Nietzsche
+nuIebz3t3Mk2|Comentários sobre o filme Under the Skin
+5IhFM3Y5bd9s|implacável como a tarântula (Charles Bukowski - 1986)
+R5fdFI4KRcnE|Eleições e política: o entretenimento dos imbecis
+LB4nBxi5ndur|Elizabeth Forster e sua bola de cristal: nazista antes mesmo de o nazismo existir
+Pul8rRP7qpxd|Dois fetichismos bobos na leitura de Nietzsche
+QcsKS2qM2wQs|O tempo de consumir filosofia acabou, está na hora de criar filosofia
+L2hxt6kqc7VI|66 - De velhas e novas tábuas, 10 - A mentiradireito natural - Assim falou Zaratustra, F. Nietzsche
+f4wsdvfbNenE|Desânimo amplo, geral e irrestrito
+sqPkWVqWXbwT|A solidão de Nietzsche (1932) - Alfred Baeumler
+JyGbvrEtTpCB|Conheça as publicações da Editora Pindorama
+6R7FhlvCnauD|O irracionalismo é um pessimismo (ou se é um Bukowski, ou um Hitler - sem meio termo)
+qOEdQ96UDy4B|O bitchute dá muito pau, pq eu não volto pro youtube?
+AL90mHaRU2M7|Um péssimo livro: Leucipo e Demócrito, Claudia Milani - Ed. Salvat
+5VbysjatlDqK|A trolagem já deu frutos! E comentando um comentário
+Z23tlGXnXLqp|65 - De velhas e novas tábuas, 9 - ilusão da vontade - Assim falou Zaratustra, F. Nietzsche
+o8z7ZA6pFVI4|Convoco todos do bitchute a se unirem em uma causa nada nobre!
+wkTqyLKOOTQ8|Lançada a minha coletânea de poemas, de 2011 a 2026.
+NvgFTIekEmkR|O sub-homem não é o diferente, é o que quer tornar todos iguais
+BL8z8KLa3S4z|O papel da arte no sistema capitalista: Das Sklavenschiff (Heinrich Heine)
+ae6l21OrTzhi|Teste
+OOzkavOXdJ5S|64 - De velhas e novas tábuas, 8 - Heráclito PARTE 3 - Assim falou Zaratustra, F. Nietzsche
+eTcJTggtyDJ1|Mais um react de vídeo - lá vem bosta!
+AAfwNiZUCzzC|Bitchute aparentemente com problemas técnicos
+wSZPOFJTClkW|Respondendo Weberson Ricardo e falando sobre traduções
+1QhQZlT1t9Cr|Um libelo contra o comunismo - O nascimento da tragédia, de F. Nietzsche
+lDCCrPVKApJG|Preciso me retratar com Gustavo Machado (e Alexandre Linck é só um palhaço, animador de plateia)
+tYXk9XCl6k9g|63 - De velhas e novas tábuas, 8 - Anaximandro PARTE 2 - Assim falou Zaratustra, F. Nietzsche
+ZYAcF9pSMK9U|Conheçam o Tenho no coração a tatuagem do diabo: ficou bonito o livro!!!
+AsyTOYFGqDIM|A violência é a linguagem universal, o resto é conversa fiada
+0brRAWZgmNYu|Os pessimistas de internet são otimistas desiludidos. São um engodo.
+76VoZtRtjY8i|Apresentação de Nietzsche, textos da infância e juventude
+4AlhzSLDC3WS|A fundamentação da metafísica dos costumes (e o terrorismo que nos cabe)
+7fqBszlTdeRx|A cultura é a nossa máquina de guerra
+KQ9SSQelyfOu|62 - De velhas e novas tábuas, 8 - Heraclitismo PARTE 1 - Assim falou Zaratustra, F. Nietzsche
+V2h5J2xAKyCq|O Comitê de Maldades do Projeto de Ações Violentas
+P6ARa4xDucWG|Unboxing de que? Tipo youtube...
+3HRqN8Vy5MRr|Publicado o Tenho no coração a tatuagem do diabo
+8Z88Jy37RrNi|61 - De velhas e novas tábuas 4 a 7, Senhor x Plebe - Assim falou Zaratustra, F. Nietzsche
+lhUUAIGN8FOt|Critério de distinção entre arte e produto (e falando sobre os projetos que sairão em breve)
+ijfiaaPKN5jc|Curso de introdução ao pensamento de Nietzsche: ser e devir (aula 5)
+BidOeZ2Ch84C|Tenho no coração a tatuagem do diabo
+jeGPkblXRNu7|A única guerra possível, a única vitória que vale a pena
+wbAzznIGDixJ|60 - De velhas e novas tábuas 3 - Assim falou Zaratustra, F. Nietzsche
+2tApLwAZkcGB|Curso de introdução ao pensamento de Nietzsche: o realismo de e em Nietzsche (aula 4)
+jk6mstSZHJub|Um imbecil e um charlatão falando merda sobre Nietzsche - e milhares de néscios assistindo
+Y1sW5JNjuQga|A mediocridade do discurso identitarista tem um pai: Hegel
+lX4RwM3uPYod|Comentando uma aula sobre Zaratustra de Nietzsche
+q6EAT6JED0co|A revolta contra a civilização - Lothrop Stoddard (LANÇAMENTO)
+YoCt6gOaz39f|59 - De velhas e novas tábuas 1 e 2 (introdução) - Assim falou Zaratustra, F.
+hWd7zeQhHJiv|Livro é privilégio, artigo de luxo que nada tem a ver com "preço"
+khtZtQ475XAX|Curso de introdução ao pensamento de Nietzsche: a unidade oculta e o sentido histórico (aula 3)
+JcruBxc9jGzK|Os 25 pontos do Programa do Partido Nacional-Socialista dos Trabalhadores Alemães
+B0KsygiVhdFz|Vivemos sim em uma matrix - que vocês mesmos criaram
+ZTNxy4Ezi27m|58 - Do espírito de gravidade - Assim falou Zaratustra, F. Nietzsche
+L6FijblIb72M|Curso de introdução ao pensamento de Nietzsche: um rascunho biográfico (aula 2)
+nCJYfu4IarGZ|Nietzsche - textos da infância e juventude: LANÇAMENTO
+F5wZF2RP6skt|Fiz um substack - bora brincar de rede social
+KQKjd4qjqNTs|Sobre o eugenismo e sua justificação maquiaveliana em Nietzsche (Emmanuel Salanskis)
+GfuMAEliTTZ0|57 - Dos três males (parte 2) - Assim falou Zaratustra, F. Nietzsche
+onnN4WhSPYkP|Curso de introdução ao pensamento de Nietzsche: apresentação do curso (aula 1)
+L89NVPJ8P5DC|Curso introdutório de Nietzsche, aulas sobre os livros traduzidos e lições de Zaratustra
+SQJTcKJEZqr0|Para quem está atoa na vida: bora jogar Diablo 1 online (piratão)
+apkj7rH9xJ1Q|Vidas e doutrinas dos filósofos ilustres: Teodoro
+PUt5CcQOE9Ou|56 - Dos três males (parte 1) - Assim falou Zaratustra, F. Nietzsche
+qiI2rMw6YYSA|O professor e a leitura mais imbecil já feita sobre O Estrangeiro, de Camus
+oS9GYSl0HvsF|A quem interessa o debate?
+kFf9fn7lxZNB|Um pedido de respeito aos ufólogos envolvidos no suposto mistério de Varginha
+IhZMtdiy9I6b|Kant, Schopenhauer e Freud: o inconsciente como Vontade e coisa em si
+XXWlJKZ0qjDD|Sobre Lukács e Losurdo. Stoddard, Nietzsche e novos vídeos
+OhuAB7cH7EV5|55 - O regresso - Assim falou Zaratustra, F. Nietzsche
+5Oh2K401RzGW|Quem não entendeu Losurdo e Lukács, não entendeu Nietzsche
+lj7DlAzT0aFl|Os redpills e blackpills são ingênuos - o buraco é muito mais embaixo
+KpZI8Mnk0HX6|54 - Dos apóstatas - Assim falou Zaratustra, F. Nietzsche
+Uaav4XUyBsZL|Tem que ser muito otário pra pensar que política influi em alguma coisa
+UjvqqDHpfdcd|O "universo" infinito é de uma infinutide diferente do que você pensa
+8bSuFW1FXxn9|53 - Do passar além - Assim falou Zaratustra, F. Nietzsche
+XhRZCTbYf2do|Textos possuem limites interpretativos: não dá para inventar qualquer coisa da sua cabeça
+2q90iHMr6g4B|Sobre a tradução dos livros (e seus lançamentos)
+AJJOG4Heg8qa|Para (não) começar o estudo de filosofia
+qLlxd4SSLQoq|52 - No monte das oliveiras - Assim falou Zaratustra, F. Nietzsche
+nbM9IBxz7gxv|"Estudar" no youtube é desaprender. Ali é doutrinação para te manter inofensivo
+Plyeoz8O41k5|51 - Da virtude que apequena - Assim falou Zaratustra, F. Nietzsche
+emLjCJXoKDxk|Filosofia é herança - educação é ilusão
+8rPQBAjCiCJY|A filosofia acadêmica é tão ridícula quanto a literatura acadêmica
+APYte1qgBOg1|Marilyn Manson me apresentou Nietzsche. Conheça Marilyn Manson!
+ODwQc76CpiPj|50 - Antes do nascer do sol - Assim falou Zaratustra, F. Nietzsche
+NJOfFg5NVfZM|Gratidão e compaixão, duas palavras que os medíocres usam para suportar suas mediocridades
+jPufqcgAflTG|Filosofia é questionamento - e os caras a vendem como se fosse uma resposta...
+ox4hq5TFnlCi|Estou definitivamente abandonando qualquer tipo de reflexão política - o ser humano que se lasque
+mfgcdjd7yaNF|49 - Da bem-aventurança involuntária - Assim falou Zaratustra, F. Nietzsche
+1rSNBOxGD04x|Coletânea de músicas para estudar como um Bruto Chanchada no ônibus da suruba
+mez37tpn5sKv|A cultura então gerou o ser humano "do nada" - metafísicos são sempre os outros...
+GOi61Nymoasr|A turma do Ernane não é só medíocre; são doentes, degenerados e culpados pelo Brasil ser essa bosta
+Vcou8fewrwK6|O ódio me tornou abstêmio, há meses não bebo (e não há nada de glorioso em parar de beber)
+rICuFonJeRje|A turma do Ernane não é só medíocre; são doentes, degenerados e culpados pelo Brasil ser essa bosta
+C0gQyElL2dQ5|48 - Da visão e enigma - Assim falou Zaratustra, F. Nietzsche
+y5SO7l90vDrm|A turma do Ernane não é só medíocre; são doentes, degenerados e culpados pelo Brasil ser essa bosta
+0qiJjLYc871z|Viva o marimbondo-de-papelão. Tá melhor que gente. Obrigado!
+5rKdHShTC9wV|A importância do estudo dos pré-socráticos e os cuidados necessários para essa leitura
+nqR2Ed5NhhCX|Quem colocou as leis contra o cristianismo em prática? Adivinhem...
+mlqzYKwMZQxk|47 - O andarilho - Assim falou Zaratustra, F. Nietzsche
+PQ1RbGlULL4z|Sobre o canal que fizeram pros meus vídeos no youtube
+mZYieXaQNgAY|Angústia - Graciliano Ramos (a história do livro começa aos 22:30 minutos)
+YOT7df2M3NEf|o cadarço - charles bukowski
+p9YyjiFxmptg|Qual é a minha posição política?
+OXdOnM0yV3CF|Duas ilusões do homem médio: o horror ao ad hominem e o apego ao "se eu..."
+o41SVNBNST4c|Prof. Rafael Daher está errado sobre EUA e Israel (e sobre outras coisas também)
+epmI6XJ6BP2P|Alfred Baeumler - Nietzsche: o filósofo e o político | LANÇAMENTO OFICIAL
+8mV6i1fNoEfK|46 - A hora mais quieta - Assim falou Zaratustra, F. Nietzsche
+8gLfnH0Rpzq7|As fases históricas da teoria racial Nacional-Socialista- PARTE 3
+79X6I70qbiuN|O processo - Franz Kafka: um livro bem pior do que eu me lembrava
+vuOMcNs9Lm6b|O Eterno Retorno do Igual de F. Nietzsche - INTRODUÇÃO (o problema da tradução)
+nQeK3V6dHQnt|Cuspa na vaidade e na burrice daqueles que só "querem fazer o bem"
+SjvKTfKCToyt|45 - Da prudência humana - Assim falou Zaratustra, F. Nietzsche
+3DA2Bjpzt7hl|As fases históricas da teoria racial Nacional-Socialista - PARTE 2
+PcOIv9YkAUWt|Nossos amigos islâmicos oferecem seu sangue para purificar a Terra novamente
+tsHbSRR4bT1i|A única questão filosófica que importa: por que o ser e não o nada? ETERNO RETORNO
+K55jQbY1md84|A vida não tem valor intrínseco e os falhos devem ser extirpados do existir
+wb42vWt07aUt|44 - Da redenção - Assim falou Zaratustra, F. Nietzsche
+oD0WATHWIBxb|Cultura não é para qualquer imbecil que queira
+tYYVhPj0LHsM|As fases históricas da teoria racial Nacional-Socialista - PARTE 1
+S7ksSjkcZGaH|O silêncio é o único discurso de ódio possível - e precisamos desse silêncio para amolar as facas
+z3OQcky6gg0T|Nietzsche: cartas da infância, bilhetes da loucura
+hqK9sepaMdT5|Será que essa entra na lista de Schindler? Kkkkkk
+uHULMcY6wUzd|A revolução é individual, solitária, e você irá fracassar - bem vindo ao inferno. (parte 1)
+biErDTgGLQ8C|300, Adolf Hitler e a permanência do nacional-socialismo
+j0FBnDZ4zN66|5 - Ecce Homo - F. Nietzsche - Por que sou tão sábio (PARTE 3)
+OB5iSQhF1RKp|As interpretações cabaço do homem-médio para o De olhos bem fechados, de Kubrick
+G3tZKQ5OQLa6|A única questão filosófica que importa: por que o ser e não o nada? ETERNO RETORNO... Parte 2
+Zmjb9BRqGN0i|43 - O adivinho - Assim falou Zaratustra, F. Nietzsche
+QdKU1JoPEaAj|Piedade pra ninguém, pra ninguém, pra ninguém...
+3SOpkdJsjIu9|As Fases Históricas da Teoria Racial Nacional-Socialista - INTRODUÇÃO
+eFcIrWInPIh7|Os vídeos vão ter algum atraso, mas o motivo é excelente
+hfPbU1mw5gSy|/sobre a necessidade de construir uma nova ideia
+T9MhjrsPJTGI|42 - Dos grandes acontecimentos - Assim falou Zaratustra, F. Nietzsche
+LH2uNGdraIsw|Notícias sobre o livro do Baeumler e a "surpresa" no caso Epstein e sua tchurma...
+MecWCwnMxb03|Como seria (foi) uma pedagogia irracionalista?
+kWyarkZ3x8zH|Assumindo um chamado e se responsabilizando por ele (por enquanto sem vídeos de Mein Kampf)
+z8coC4wTxp9Z|4 - Ecce Homo - F. Nietzsche - Por que sou tão sábio (PARTE 2)
+Xm8ebptgn7uT|A seletiva ancestralidade brasileira e seus efeitos cômicos - bem vindo ao mundo hospício
+QJWCVoQtX0xV|A única questão filosófica que importa: por que o ser e não o nada? ETERNO RETORNO... Parte 1
+az1xBPT4ChDf|41 - Dos poetas - Assim falou Zaratustra, F. Nietzsche
+0k2VXjPzqP7S|A genialidade de Nietzsche em identificar que o cristianismo nada mais é que uma perfídia judaica
+PDYbK91HVp2O|O mundo está cheio dos supérfluos - ou eles se vão, ou somos nós que vamos...
+8X7n2fA139eb|Vão lá ler meus textos (só pedrada!) no Medium.
+Q0M8aXlrVIRp|3 - Ecce Homo - F. Nietzsche - Por que sou tão sábio (PARTE 1)
+lbxJIGmJbKdR|40 - Dos eruditos (Assim falou Zaratustra - F. Nietzsche)
+s1sH68CNJWAr|33 - O canto noturno (Assim falou Zaratustra_ F. Nietzsche)
+9kDF3xwFGC0V|39 - Do imaculado conhecimento (Assim falou Zaratustra_ F. Nietzsche)
+4v7luDx3Uyoj|38 - Do país da cultura (Assim falou Zaratustra_ F. Nietzsche)
+A07tfO4CP3r6|37 - Dos sublimes (Assim falou Zaratustra_ F. Nietzsche)
+nsCve0u0KKW2|36 - Da superação de si mesmo (Assim falou Zaratustra_ F. Nietzsche)
+6aiC5BFLkD9s|35 - O canto dos sepulcros (Assim falou Zaratustra_ F. Nietzsche)
+n3scjm5Nzq9v|34 - O canto da dança (Assim falou Zaratustra_ F. Nietzsche)
+421nzTAgtc0y|32 - Dos sábios famosos (Assim falou Zaratustra_ F. Nietzsche)
+yWjyqPy0M9M3|31 - Das tarântulas (Assim falou Zaratustra_ F. Nietzsche)
+Vy0EVTc2vVz5|30 - Da gentalha (Assim falou Zaratustra_ F. Nietzsche)
+3TPvpRrK7HJr|26 - Nas ilhas bem-aventuradas (Assim falou Zaratustra_ F. Nietzsche)
+bt1Nt1rb4xVg|29 - Dos virtuosos (Assim falou Zaratustra_ F. Nietzsche)
+pVUgA4rbjzLv|28 - Dos sacerdotes (Assim falou Zaratustra_ F. Nietzsche)
+cteViG6NSlO2|27 - Dos compassivos (Assim falou Zaratustra_ F. Nietzsche)
+HTrZwxb4WFY1|25 - O menino com o espelho (Assim falou Zaratustra_ F. Nietzsche)
+J6uyCfDwO7a6|O homem médio acredita na verdade - seja lá a mentira que for...
+mDxWS9nT1I84|2 - Minha Luta, A. Hitler - I, Na casa paterna
+dzZhgX5Za3gp|Reconhecer sua própria estranheza e aceitar a sua solidão inerente (vídeo resgatado do youtube)
+PuFcNXrHKsFW|Voltando com os vídeos de Zaratustra (dinâmica dessa volta) - e sobre as traduções de Baeumler
+fvwcHY8acTo2|Como tornar-se aquilo que já se é
+m65qnZQNKQkg|A raça dos escravos quer te por na linha, mas escapar disso está ao alcance das suas mãos...
+VXcv8N3Tpq3I|A 3ª guerra mundial vem ai, para desespero da Europa (menos de 100 anos depois...)
+uR4YPTJNigna|1 - Minha Luta, A. Hitler - Introdução e bastidores de sua feitura
+wUwnh6IXBasF|Planos de médio e longo prazo para 2026. Traduções, textos e vídeos.
+Cl27zPBZfSVn|2 - Ecce Homo - F. Nietzsche - Prólogo
+edoQsbp72tMy|Bata onde dói - ted kaczynski / e vou ensinar a vocês onde é que dói.
+9pqcI08qSgxU|Youtube é o piscinão de ramos da internet. Local de analfabetos. Um erro ter estado ali.
+NSOhrA3eK5QM|1 - Escreva com sangue e você descobrirá que sangue é espírito - Ecce Homo, introdução
+zP2tqy3RTZdx|25 - O menino com o espelho (Assim falou Zaratustra_ F. Nietzsche)
+Uer34OfPY9Mq|23 - Da morte voluntária (Assim falou Zaratustra_ F. Nietzsche)
+lCqL7CfG7JvP|24 - Da virtude dadivosa (Assim falou Zaratustra_ F. Nietzsche)
+s53M2NHvOybR|22 - Dos filhos e do matrimônio (Assim falou Zaratustra_ F. Nietzsche)
+NaGx1TrdB0op|20 - Das velhas e novas mulherezinhas (Assim falou Zaratustra_ F. Nietzsche)
+zSvytfNnC4Ed|19 - Do caminho do criador (Assim falou Zaratustra_ F. Nietzsche)
+JjECGyWLDolj|21 - Da picada da víbora (Assim falou Zaratustra_ F. Nietzsche)
+IXT225a5bR8f|18 - Do amor ao próximo (Assim falou Zaratustra_ F. Nietzsche)
+XwuoRw3J3ete|Comemoração dos 21 inscritos!!!
+KPOuJcOjudGc|Os canais de (in)cultura pop prestam um desserviço à juventude analfabeta e ignorante
+2rS422BDkKwn|16 - Do amigo Parte 2(Assim falou Zaratustra_ F. Nietzsche)
+L5C53S019j5l|16 - Do amigo Parte 1(Assim falou Zaratustra_ F. Nietzsche)
+FrkBOg6RiN9r|17 - Das mil metas e uma só meta (Assim falou Zaratustra_ F. Nietzsche)
+nx0fVlZj4NLc|12 - Da guerra e dos guerreiros (Assim falou Zaratustra_ F. Nietzsche)
+z1mehQXY3YY9|15 - Da castidade (Assim falou Zaratustra_ F. Nietzsche)
+4YaqtbwGuUP5|8 - Do criminoso pálido (Assim falou Zaratustra_ F. Nietzsche)(M4A_128K)
+usOmqS2xYdN0|13 - Do novo ídolo (Assim falou Zaratustra_ F. Nietzsche)
+cf3NLH9VK3uj|7 - Das paixões alegres e dolorosas (Assim falou Zaratustra_ F. Nietzsche)
+X1E1EorqeuWZ|11 - Dos pregadores da morte (Assim falou Zaratustra_ F. Nietzsche)
+36aOAuuyuFlU|6 - Dos desprezadores do corpo (Assim falou Zaratustra_ F. Nietzsche)
+8KhybrSpn7W3|14 - Das moscas do mercado (Assim falou Zaratustra_ F. Nietzsche)
+LWfqQI6VCOsF|9 - Do ler e escrever (Assim falou Zaratustra_ F. Nietzsche)(M4A_128K)
+BN4PqMbAfitW|A mediocrização das artes e a literatura dos engomadinhos
+fcO0puSBBNRr|O homem médio em apuros com suas doenças! Socorro, mamãe!!
+Y1mz5T64jcLy|A filosofia da força - Benito Mussolini
+QWFKLTQaVids|5 - Dos trasmundanos (Assim falou Zaratustra_ F. Nietzsche)
+fyvFqIkRu2UO|4 - Das cátedras da virtude (Assim falou Zaratustra_ F. Nietzsche)
+S6duCs0OuXvv|3 - Das três metamorfoses (Assim falou Zaratustra_ F. Nietzsche)
+dkH6TtpFMVpH|2 - Prólogo de Zaratustra (Assim Falou Zaratustra_ F. Nietzsche)
+3a0C9eIdoa4O|1 - Assim falou Zaratustra - visão geral do livro
+vquPBF6ZMSkh|A humanidade é de vítimas e pauta a civilização em suas fraquezas
+tQ10CcaIhxxW|Pôr do sol no sul de Minas
+EQno7JBtElUM|Onde os liberais, anarquistas e comunistas erram - e esta será a ruína do homem médio
+ku5blTlGDvmU|O Estado Grego, texto nacional socialista de Nietzsche
+sf5C3SFxgVXL|Estudos sobre blackpill
+SjabhPzbAXcf|O Gideão Cerqueira precisa da minha imagem para ganhar dinheiro de vaquinha, vamos ajudar!
+0nHVimWABoHc|Meu erro idiota de ter acreditado que conhecimento era uma forma de poder
+rZlaM7mLiBPo|RECOMENDADO Sangue de Bode A Sombra Que Me Acompanhava Era a Mesma do Diabo
+f4q9GJdnznBr|A ameaça dos sub-homens. Seu custo e alternativas de solução.
+aUdRVCfxPuOR|Deputado Renato Freitas sofre democracia com as próprias mãos (com mãos alheias, na verdade)
+MNsVyfSxUha3|Redpill： interpretando a fraqueza como liberdade. A impotência como força. A falha como virtude
+FfykSLVhqRQx|Ficção não se debate. Isso é papel dos profissionais de saúde
+HF6Mnw0byOQT|Comentando comentários do vídeo de ontem - espetacularização da mediocridade
+Uomjz0cZxAIZ|Tolerância zero com as mentiras para enturmar!
+FskyoMe7hozN|Quem se deitará no chão por nós
+tlXWtjZLJea1|Ilusão é tudo aquilo que nos afasta de nossas necessidades básicas
+CcIsMYbySom2|Viva o SUS! Viva a ciência! VIVA A MORTE DO MEU PAU!
+QEqDQtkM7j5m|Qual verdade deve ser buscada a qualquer custo？ Vou lhes ensinar
+V5gY7dGTL6iL|Redpill e o choro de transformar fraquezas em virtudes
+BSApm0R97D7Z|Seriam os problemas filosóficos meros defeitos da linguagem？
+BfcpL0qNwnLa|Sobre o ＂tratamento＂ medicamentoso de sentimentos e comportamentos
+7VZpyfWwvaXJ|Há que ter necessidade de ser forte; senão jamais chegamos a sê-lo
+6NSNXBIKmYnK|Se for pra ler por ler. melhor é ser analfabeto mesmo
+WB9Bt08fZV3E|Reflexões sobre o tempo e o livre arbítrio
+x8pcygl79o3V|Ser ou parecer ser, eis a questão
+HQMhpBgqvHfT|Sobre paixões e ódios virtuais - a doença de só conseguir se relacionar consigo mesmo
+iRcWW9wDTwd8|Nietzsche - um guia de leitura (ordem mais palatável para quem não estuda filosofia)
+SGh754s2Xq7n|Nietzsche, Freud e o porquê da civilização
+zpF7xqw6N0cq|Há muito já estou de saco cheio dos idiotas
+yePt0374xZJg|Filosofia não é profissão; professor de filosofia, é
+gd8hL0OdQTPi|A educação niilista está criando uma geração de esquizofrênicos - o verdadeiro papel da educa
+vgIhqzIYongB|A idiotia em geral e os idiotas em particular： jamais tolere os subnormais
+tdJKTA0GCp15|Eu sou o anti-booktube.É preciso PROIBIR a leitura aos bocholas e às empetecadas,pelo bem da cultura
+RNrWGK1MsuXD|Ecce Homo - Nietzsche (um dos livros mais fodas desse mundo)
+5zRIRHQM7SKF|É preciso honrar aqueles que você admira. Com a sua vida, com sangue
+VUGkA5x6FCG7|Especial de 4 inscritos
+hzF4Dn5r4JX6|Direito não é ciência e muito menos filosofia. É porrete
+LlIxZIjrfODn|É preciso abandonar as ilusões - os anestésicos não curam e só te aprisionam 1
+TXOXoZFwvLLI|É difícil ignorar o que é inútil para nós. E é o primeiro passo
+TybbEkkOI15g|Dicas para se viver bem： é demorado mas só depende de você
+BdrkhgarvquS|Domesticando os falhos： trabalho, compaixão, a busca por heróis e multidões
+7MPG4k8MpfWU|Conversas sobre o excelente They Live, do excelente John Carpenter
+iAQonfh3FwpX|Devemos combater ou aprender a conviver com nossos Demônios？
+QYgW9Fg5xvdh|Comentando um comentário： nosso amigo Nietzsche é uma excelente companhia
+5Fcep8PNQvp7|Comunismo = cristianismo (e ambos são niilistas)
+3geW90IFWI4A|Comentando o aforismo 146 do Além do Bem e do Mal, de F. Nietzsche (sugestão do Saga)
+iHuscxSN4YyD|Coleção F. Nietzsche da Companhia das Letras (Trad. Paulo César de Sousa) é top demais!
+CXm4uDXnUxDE|Aproveite enquanto é tempo, logo eu vou embora
+FXGgpPwASNId|Autores que eu gosto： Graciliano Ramos
+bRAbSH2DfcSe|Ainda sobre o processo de infantilização de adultos (parte 2)
+kMJyTiuulRpK|A vida não é sobre encontrar a si mesmo; é sobre construir a si mesmo
+n145pTiQ9NVG|Aulão de como ser foda, com Clarice Russo (o que você precisa para se dar bem na existência)
+PhloI3hJL53T|Assim falou Zaratustra (F. Nietzsche). 23 anos para começar a entender um livro
+RixxbGkm23gY|A pior das violências： o calendário e o relógio
+6rTRDlfkAwwV|Chatgpt, domesticação de animais e o homem se relacionando doidamente consigo mesmo
+zoF2VfkQa6gQ|A vida tem, sim, valor intrínseco (parte 2) - leituras de Adélia Prado
+ZYnqmA72xF5B|Cargo público e a busca por não ser abusado pela sociedade
+AtYeDp1BYs3y|A ética do veganismo e a fantasia da moral
+w4w6ePmLhFoV|A informação só te prejudica, você não precisa disso para a sua vida
+OzURK99oJUcv|A propriedade pode se conciliar com a justiça？
+5Ec4SmP1hLOJ|A vida não é ruim; a SUA vida é que é uma bosta
+Lolap2R8mlOe|A questão fundamental da ética e a solução apresentada por Nietzsche
+lbQiP03Y6BeJ|A solução para mindingos virtuais e para outros seres abjetos
+cEP8dLSjq6tO|A solução para a espetacularização da mediocridade é fácil： fuja dela e vá sozinho
+1YjO7yZ86Afu|A risível arrogância do espiritismo
+Q0j6VsdRAsUK|A presunção infantil dos cristãos não tem limites_ Deus ajuda no futebol e alivia até unha encravada
+jHo8gzVg1qi8|A globalização da burrice e a manutenção da escravatura contemporânea
+FaXMth0oqgFc|A cura para a burrice reinante (que os semianalfabetos se coloquem nos seus medíocres lugares)
+xk2zfPh01LnD|A propriedade pode se conciliar com a justiça？
+X2j1qp5GlG13|A negligenciada via de mão dupla das emoções
+AK8zsAXh6rXt|A presunção infantil dos cristãos não tem limites_ Deus ajuda no futebol e alivia até unha encravada
+ljDlRzgGQEY4|A irracionalidade do homem dito civilizado`;
+
+const VIDEOS = RAW.split("\n").map(l => {
+  const i = l.indexOf("|");
+  const titulo = l.slice(i + 1);
+  return { id: l.slice(0, i), titulo, aba: classificar(titulo) };
+});
+
+const tabsEl = document.getElementById("tabs");
+const contentEl = document.getElementById("content");
+
+function el(tag, attrs = {}, text) {
+  const e = document.createElement(tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text) e.textContent = text;
+  return e;
+}
+
+let mostrar = 12, atual = null;
+function render(chave) {
+  const aba = ABAS.find(a => a.chave === chave) || ABAS[0];
+  if (aba.chave !== atual) { mostrar = 12; atual = aba.chave; }
+  [...tabsEl.children].forEach(b => b.setAttribute("aria-selected", String(b.dataset.chave === aba.chave)));
+  contentEl.replaceChildren();
+  const lista = VIDEOS.filter(v => v.aba === aba.chave);
+
+  if (!lista.length) {
+    contentEl.append(el("p", { class:"empty" }, "Nenhum vídeo neste tópico ainda."));
+    return;
+  }
+
+  lista.slice(0, mostrar).forEach((v, i) => {
+    const bloco = el("div");
+    bloco.append(el("p", { class:"eyebrow" }, i === 0 ? "Vídeo em destaque" : "Vídeo"));
+    bloco.append(el("h1", {}, v.titulo));
+
+    const intro = el("p", { class:"intro" });
+    intro.append("O vídeo está incorporado abaixo. Se o player não carregar, você pode abri-lo diretamente no ");
+    const a = el("a", { href:`https://www.bitchute.com/video/${v.id}/`, target:"_blank", rel:"noopener" }, "BitChute");
+    intro.append(a, ".");
+    bloco.append(intro);
+
+    const card = el("section", { class:"video-card", "aria-label":"Player de vídeo" });
+    const wrap = el("div", { class:"video" });
+    wrap.append(el("iframe", {
+      src:`https://www.bitchute.com/embed/${v.id}/`,
+      title:v.titulo,
+      allowfullscreen:"",
+      loading:"lazy"
+    }));
+    card.append(wrap);
+    bloco.append(card);
+    contentEl.append(bloco);
+  });
+
+  if (lista.length > mostrar) {
+    const mais = el("button", { class:"mais" }, `Mostrar mais (${lista.length - mostrar} restantes)`);
+    mais.addEventListener("click", () => { mostrar += 24; render(aba.chave); });
+    contentEl.append(mais);
+  }
+}
+
+ABAS.forEach(a => {
+  const b = el("button", { role:"tab", "data-chave":a.chave, "aria-selected":"false" }, `${a.nome} (${VIDEOS.filter(v => v.aba === a.chave).length})`);
+  b.addEventListener("click", () => { location.hash = a.chave; render(a.chave); });
+  tabsEl.append(b);
+});
+
+window.addEventListener("hashchange", () => render(location.hash.slice(1)));
+render(location.hash.slice(1));
+</script>
 </body>
 </html>
