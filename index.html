@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Vídeo | Minha Página</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101010;
+      --panel: #191919;
+      --text: #f3f3f3;
+      --muted: #a5a5a5;
+      --accent: #e44b4b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at top, #292020 0%, var(--bg) 52%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      border-bottom: 1px solid #303030;
+      padding: 20px 24px;
+    }
+    .brand {
+      max-width: 1050px;
+      margin: 0 auto;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .95rem;
+    }
+    .brand span { color: var(--accent); }
+    main {
+      width: min(100% - 32px, 920px);
+      margin: 56px auto;
+      flex: 1;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.12;
+      margin: 0 0 14px;
+      letter-spacing: -.035em;
+    }
+    .intro {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 28px;
+    }
+    .video-card {
+      background: var(--panel);
+      padding: 10px;
+      border: 1px solid #303030;
+      border-radius: 16px;
+      box-shadow: 0 24px 70px #0007;
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 9px;
+      background: #050505;
+    }
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 4px 4px;
+    }
+    .note { color: var(--muted); font-size: .9rem; }
+    .button {
+      display: inline-block;
+      color: white;
+      background: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 9px;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .button:hover { background: #c93c3c; transform: translateY(-1px); }
+    footer {
+      border-top: 1px solid #303030;
+      color: #858585;
+      text-align: center;
+      padding: 22px 16px;
+      font-size: .82rem;
+    }
+    @media (max-width: 520px) {
+      main { margin: 36px auto; }
+      .actions { align-items: stretch; flex-direction: column; }
+      .button { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Minha <span>Página</span></div>
+  </header>
+  <main>
+    <p class="eyebrow">Vídeo em destaque</p>
+    <h1>3 - O que é isto - a filosofia? (Martin Heidegger) - Falsa pergunta</h1>
+    <p class="intro">
+      O vídeo está incorporado abaixo. Se o player não carregar,
+      você pode abri-lo diretamente no BitChute.
+    </p>
+
+    <section class="video-card" aria-label="Player de vídeo">
+     <div class="video">
+  <iframe
+    src="https://www.bitchute.com/embed/XTfJ0YfGNjD8/"
+    title="Vídeo do BitChute"
+    allowfullscreen
+    loading="lazy"></iframe>
+</div>
+
+<style>
+  .video { position: relative; width: 100%; max-width: 900px; margin: 0 auto; aspect-ratio: 16 / 9; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 12px; }
+</style>
+    </section>
+  </main>
+
+  <footer>Vídeo incorporado de uma plataforma externa.</footer>
+</body>
+</html>
